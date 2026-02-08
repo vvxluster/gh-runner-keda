@@ -34,7 +34,7 @@ jobs:
 
       # Step 5: Upload Helm Chart to GitHub Artifact Repository
       - name: Upload Helm Chart
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.0.0
         with:
           name: helm-chart
           path: gh-runner-chart-*.tgz # Upload the packaged Helm chart
