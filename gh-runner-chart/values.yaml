@@ -1,6 +1,9 @@
 metadata:
   namespace: gh-runner
 
+keda:
+  namespace: keda
+
 deployment:
   name: github-runner
   appLabel: github-runner
