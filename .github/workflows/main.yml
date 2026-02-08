@@ -25,11 +25,20 @@ jobs:
 
       # Step 4: Package the Helm chart
       - name: Package Helm Chart
-        run: helm package gh-runner-chart
+        run: |
+          helm package gh-runner-chart
+          ls -la *.tgz
 
-      # Step 5: Upload Helm Chart to GitHub Artifact Repository
-      - name: Upload Helm Chart
-        uses: actions/upload-artifact@v4.0.0
-        with:
-          name: helm-chart
-          path: gh-runner-chart-*.tgz # Upload the packaged Helm chart
+      - name: Login to GitHub Container Registry
+        if: github.event_name == 'push'
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push Helm Chart to GHCR
+        if: github.event_name == 'push'
+        run: |
+          CHART_VERSION=$(helm show chart gh-runner-chart | grep '^version:' | awk '{print $2}')
+          CHART_NAME=$(helm show chart gh-runner-chart | grep '^name:' | awk '{print $2}')
+          echo "Pushing ${CHART_NAME}:${CHART_VERSION} to GHCR..."
+          helm push ${CHART_NAME}-${CHART_VERSION}.tgz oci://ghcr.io/${{ github.repository_owner }}
+          echo "Successfully pushed to oci://ghcr.io/${{ github.repository_owner }}/${CHART_NAME}:${CHART_VERSION}"
