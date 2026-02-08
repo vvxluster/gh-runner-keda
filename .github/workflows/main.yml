@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "gh-runner-chart/**" # Trigger only if changes are made in the Helm chart directory
-  pull_request:
-    paths:
-      - "gh-runner-chart/**"
 
 jobs:
   validate-and-publish:
