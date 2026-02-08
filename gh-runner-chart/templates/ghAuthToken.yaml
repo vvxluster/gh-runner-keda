@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gh-auth-token
+  namespace: {{ .Values.metadata.namespace }}
+type: Opaque
+data:
+  personalAccessToken: Z2hwXzY0Um1SMFBJRXNyZTBxSkFDN28yVUIyQXkyWFBQSTJmVTM5awo=

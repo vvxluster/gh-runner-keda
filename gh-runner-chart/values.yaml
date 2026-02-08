@@ -1,0 +1,43 @@
+metadata:
+  namespace: gh-runner
+
+deployment:
+  name: github-runner
+  appLabel: github-runner
+  image: myoung34/github-runner:latest
+  env:
+    runnerScope: "org"
+    orgName: "vvxluster"
+    accessToken:
+      secretName: github-auth
+      secretKey: personalAccessToken
+    labels: "gh-keda-runner"
+    runnerWorkdir: "/tmp/runner"
+    ephemeral: "true"
+    disableAutoUpdate: "true"
+    runnerGroup: "gh-runner-group"
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "500m"
+    limits:
+      memory: "2Gi"
+      cpu: "1500m"
+  volumeMounts:
+    work:
+      mountPath: /tmp/runner
+
+scaledObject:
+  name: github-runner-scaler
+  scaleTargetRef: github-runner
+  minReplicaCount: 0
+  maxReplicaCount: 5
+  pollingInterval: 30
+  cooldownPeriod: 300
+  triggers:
+    metadata:
+      owner: "vvxluster"
+      runnerScope: "org"
+      labels: "gh-keda-runner"
+      targetWorkflowQueueLength: "1"
+    authenticationRef: github-auth-trigger

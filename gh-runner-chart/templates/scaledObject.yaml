@@ -1,0 +1,21 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ .Values.scaledObject.name }}
+  namespace: {{ .Values.metadata.namespace }}
+spec:
+  scaleTargetRef:
+    name: {{ .Values.scaledObject.scaleTargetRef }}
+  minReplicaCount: {{ .Values.scaledObject.minReplicaCount }}
+  maxReplicaCount: {{ .Values.scaledObject.maxReplicaCount }}
+  pollingInterval: {{ .Values.scaledObject.pollingInterval }}
+  cooldownPeriod: {{ .Values.scaledObject.cooldownPeriod }}
+  triggers:
+    - type: github-runner
+      metadata:
+        owner: {{ .Values.scaledObject.triggers.metadata.owner }}
+        runnerScope: {{ .Values.scaledObject.triggers.metadata.runnerScope }}
+        labels: {{ .Values.scaledObject.triggers.metadata.labels }}
+        targetWorkflowQueueLength: {{ .Values.scaledObject.triggers.metadata.targetWorkflowQueueLength }}
+      authenticationRef:
+        name: {{ .Values.scaledObject.triggers.authenticationRef }}

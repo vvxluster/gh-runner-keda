@@ -1,0 +1,49 @@
+metadata:
+  name: {{ .Values.deployment.name }}
+  namespace: {{ .Values.metadata.namespace }}
+spec:
+  replicas: 0 # KEDA will manage replicas
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.appLabel }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.appLabel }}
+    spec:
+      containers:
+        - name: runner
+          image: {{ .Values.deployment.image }}
+          env:
+            - name: RUNNER_SCOPE
+              value: {{ .Values.deployment.env.runnerScope }}
+            - name: ORG_NAME
+              value: {{ .Values.deployment.env.orgName }}
+            - name: ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.deployment.env.accessToken.secretName }}
+                  key: {{ .Values.deployment.env.accessToken.secretKey }}
+            - name: LABELS
+              value: {{ .Values.deployment.env.labels }}
+            - name: RUNNER_WORKDIR
+              value: {{ .Values.deployment.env.runnerWorkdir }}
+            - name: EPHEMERAL
+              value: {{ .Values.deployment.env.ephemeral }}
+            - name: DISABLE_AUTO_UPDATE
+              value: {{ .Values.deployment.env.disableAutoUpdate }}
+            - name: RUNNER_GROUP
+              value: {{ .Values.deployment.env.runnerGroup }}
+          resources:
+            requests:
+              memory: {{ .Values.deployment.resources.requests.memory }}
+              cpu: {{ .Values.deployment.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.deployment.resources.limits.memory }}
+              cpu: {{ .Values.deployment.resources.limits.cpu }}
+          volumeMounts:
+            - name: work
+              mountPath: {{ .Values.deployment.volumeMounts.work.mountPath }}
+      volumes:
+        - name: work
+          emptyDir: {}
