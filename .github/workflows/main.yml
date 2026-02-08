@@ -32,7 +32,7 @@ jobs:
       - name: Login to GitHub Container Registry
         if: github.event_name == 'push'
         run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io -u ${{ github.actor }} --password-stdin
+          echo "${{ secrets.GHCRPUSH }}" | helm registry login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Push Helm Chart to GHCR
         if: github.event_name == 'push'
