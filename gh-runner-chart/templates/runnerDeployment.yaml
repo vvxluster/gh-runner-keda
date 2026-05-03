@@ -1,3 +1,5 @@
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: {{ .Values.deployment.name }}
   namespace: {{ .Values.metadata.namespace }}
@@ -29,9 +31,9 @@ spec:
             - name: RUNNER_WORKDIR
               value: {{ .Values.deployment.env.runnerWorkdir }}
             - name: EPHEMERAL
-              value: {{ .Values.deployment.env.ephemeral }}
+              value: {{ .Values.deployment.env.ephemeral | quote }}
             - name: DISABLE_AUTO_UPDATE
-              value: {{ .Values.deployment.env.disableAutoUpdate }}
+              value: {{ .Values.deployment.env.disableAutoUpdate | quote }}
             - name: RUNNER_GROUP
               value: {{ .Values.deployment.env.runnerGroup }}
           resources:

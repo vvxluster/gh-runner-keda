@@ -16,6 +16,6 @@ spec:
         owner: {{ .Values.scaledObject.triggers.metadata.owner }}
         runnerScope: {{ .Values.scaledObject.triggers.metadata.runnerScope }}
         labels: {{ .Values.scaledObject.triggers.metadata.labels }}
-        targetWorkflowQueueLength: {{ .Values.scaledObject.triggers.metadata.targetWorkflowQueueLength }}
+        targetWorkflowQueueLength: {{ .Values.scaledObject.triggers.metadata.targetWorkflowQueueLength | quote }}
       authenticationRef:
         name: {{ .Values.scaledObject.triggers.authenticationRef }}

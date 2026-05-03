@@ -2,10 +2,10 @@ apiVersion: v2
 name: gh-runner-chart
 description: A Helm chart for KEDA auto scaling for the github runner on Kubernetes
 
-dependencies:
-  - name: keda
-    version: "2.18.3"
-    repository: "https://kedacore.github.io/charts"
+#dependencies:
+#  - name: keda
+#    version: "2.18.3"
+#    repository: "https://kedacore.github.io/charts"
 
 # A chart can be either an 'application' or a 'library' chart.
 #
