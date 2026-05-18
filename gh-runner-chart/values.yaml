@@ -1,6 +1,10 @@
 metadata:
   namespace: gh-runner
 
+# Static secret (only for dev/testing - disable for production with ExternalSecret)
+staticSecret:
+  enabled: false
+
 keda:
   namespace: keda
 

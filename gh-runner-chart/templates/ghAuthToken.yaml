@@ -1,3 +1,4 @@
+{{- if .Values.staticSecret.enabled }}
 apiVersion: v1
 kind: Secret
 metadata:
@@ -6,3 +7,5 @@ metadata:
 type: Opaque
 data:
   personalAccessToken: Z2hwXzY0Um1SMFBJRXNyZTBxSkFDN28yVUIyQXkyWFBQSTJmVTM5awo=
+{{- end }}
+# NOTE: For production, use ExternalSecret with Doppler instead of hardcoded secret
