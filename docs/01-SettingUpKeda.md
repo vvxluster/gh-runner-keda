@@ -466,7 +466,7 @@ kubectl delete namespace keda
 - **KEDA Documentation**: https://keda.sh/docs/
 - **KEDA GitHub Runner Scaler**: https://keda.sh/docs/latest/scalers/github-runner/
 - **GitHub Actions Documentation**: https://docs.github.com/en/actions
-- **Your Chart Repository**: https://github.com/vvxluster/YOUR_REPO
+- **Your Chart Repository**: https://github.com/vvxluster/gh-runner-keda
 
 ---
 
